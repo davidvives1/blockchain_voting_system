@@ -1,6 +1,6 @@
 pragma solidity ^0.8.13;
 
-contract Voting {
+contract SimpleContract {
   
   // candidate name stored as bytes32 and the total votes as uint256
   mapping (bytes32 => uint256) public votesReceived;
