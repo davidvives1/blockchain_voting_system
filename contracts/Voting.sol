@@ -4,29 +4,29 @@ contract Voting {
   
   // candidate name stored as bytes32 and the total votes as uint256
   mapping (bytes32 => uint256) public votesReceived;
-  bytes32[] public candidateList;
+  bytes32[] public candidates;
 
   // Constructor (called only once)
-  constructor(bytes32[] memory candidateNames) public {
-    candidateList = candidateNames;
+  constructor(bytes32[] memory nameList) public {
+    candidates = nameList;
   }
 
   // Total votes for candidate
-  function totalVotesFor(bytes32 candidate) view public returns (uint256) {
-    require(validCandidate(candidate));
+  function sumVotes(bytes32 candidate) view public returns (uint256) {
+    require(isAllowed(candidate));
     return votesReceived[candidate];
   }
 
   // Cast a vote
-  function voteForCandidate(bytes32 candidate) public {
-    require(validCandidate(candidate));
+  function addVote(bytes32 candidate) public {
+    require(isAllowed(candidate));
     votesReceived[candidate] += 1;
   }
 
   // Checks if allowed to vote
-  function validCandidate(bytes32 candidate) view public returns (bool) {
-    for(uint i = 0; i < candidateList.length; i++)
-      if (candidateList[i] == candidate) 
+  function isAllowed(bytes32 candidate) view public returns (bool) {
+    for(uint i = 0; i < candidates.length; i++)
+      if (candidates[i] == candidate) 
         return true;
     return false;
   }
